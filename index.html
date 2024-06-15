@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expense Tracker</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+        text-align: center;
+    }
+    form {
+        margin-bottom: 20px;
+    }
+    form input[type="text"],
+    form input[type="number"],
+    form input[type="date"] {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    form button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    li {
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid #eee;
+        border-radius: 5px;
+    }
+    .delete-btn {
+        background-color: #ff3333;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+        float: right;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Expense Tracker</h1>
+    <form id="expenseForm">
+        <input type="date" id="expenseDate" required>
+        <input type="number" id="expenseAmount" placeholder="Amount" required>
+        <input type="text" id="expenseCategory" placeholder="Category" required>
+        <input type="text" id="expenseDescription" placeholder="Description">
+        <button type="submit">Add Expense</button>
+    </form>
+    <ul id="expenseList"></ul>
+</div>
+
+<script>
+    const expenseForm = document.getElementById('expenseForm');
+    const expenseList = document.getElementById('expenseList');
+
+    expenseForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const expenseDate = document.getElementById('expenseDate').value;
+        const expenseAmount = parseFloat(document.getElementById('expenseAmount').value);
+        const expenseCategory = document.getElementById('expenseCategory').value;
+        const expenseDescription = document.getElementById('expenseDescription').value;
+
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <strong>Date:</strong> ${expenseDate}<br>
+            <strong>Amount:</strong> $${expenseAmount.toFixed(2)}<br>
+            <strong>Category:</strong> ${expenseCategory}<br>
+            <strong>Description:</strong> ${expenseDescription}
+            <button class="delete-btn">Delete</button>
+        `;
+        expenseList.appendChild(li);
+
+        const deleteBtn = li.querySelector('.delete-btn');
+        deleteBtn.addEventListener('click', function() {
+            expenseList.removeChild(li);
+        });
+
+        expenseForm.reset();
+    });
+</script>
+</body>
+</html>
